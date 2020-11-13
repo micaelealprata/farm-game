@@ -35,7 +35,9 @@ public class SpriteSheetAnimationApp extends GameApplication {
         FXGL.getInput().addAction(new UserAction("Right") {
             @Override
             protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveRight();
+                if (lastKeyPressed == KeyCode.D) {
+                    player.getComponent(AnimationComponent.class).moveRight();
+                }
             }
 
             @Override
@@ -49,7 +51,9 @@ public class SpriteSheetAnimationApp extends GameApplication {
 
             @Override
             protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveLeft();
+                if (lastKeyPressed == KeyCode.A) {
+                    player.getComponent(AnimationComponent.class).moveLeft();
+                }
             }
 
             @Override
@@ -63,7 +67,9 @@ public class SpriteSheetAnimationApp extends GameApplication {
 
             @Override
             protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveDown();
+                if (lastKeyPressed == KeyCode.S) {
+                    player.getComponent(AnimationComponent.class).moveDown();
+                }
             }
 
             @Override
@@ -76,7 +82,9 @@ public class SpriteSheetAnimationApp extends GameApplication {
         FXGL.getInput().addAction(new UserAction("Up") {
             @Override
             protected void onAction() {
-                player.getComponent(AnimationComponent.class).moveUp();
+                if (lastKeyPressed == KeyCode.W) {
+                    player.getComponent(AnimationComponent.class).moveUp();
+                }
             }
 
             @Override
@@ -89,28 +97,23 @@ public class SpriteSheetAnimationApp extends GameApplication {
         FXGL.getInput().addTriggerListener(new TriggerListener() {
             @Override
             protected void onActionBegin(Trigger trigger) {
-                if (trigger.isKey()) {
-                    var keyTrigger = (KeyTrigger) trigger;
-                    lastKeyPressed = keyTrigger.getKey();
-                    System.out.println("last key pressed: " + lastKeyPressed);
-                }
             }
 
             @Override
             protected void onAction(Trigger trigger) {
-                if (trigger.isKey()) {
+                if (trigger.isKey() && lastKeyPressed == null) {
                     var keyTrigger = (KeyTrigger) trigger;
 
                     // key is being pressed now
-                    var key = keyTrigger.getKey();
+                    lastKeyPressed = keyTrigger.getKey();
                 }
-
-                System.out.println("On: " + trigger);
             }
 
             @Override
             protected void onActionEnd(Trigger trigger) {
-                System.out.println("End: " + trigger);
+                if (trigger.isKey()) {
+                    lastKeyPressed = null;
+                }
             }
         });
     }

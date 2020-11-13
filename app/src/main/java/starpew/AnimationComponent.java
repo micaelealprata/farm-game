@@ -1,6 +1,5 @@
 package starpew;
 
-import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -42,7 +41,6 @@ public class AnimationComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         if (speed != 0) {
-
             if (isMovingX) {
                 entity.translateX(speed * tpf);
                 if (texture.getAnimationChannel() == animIdle || texture.getAnimationChannel() == animWalkDown
